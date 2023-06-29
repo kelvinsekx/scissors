@@ -14,16 +14,16 @@ export function Menubar() {
   return (
     <ShadcnMenubar>
       <MenubarMenu>
-        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarTrigger>My URLs</MenubarTrigger>
         <MenubarContent>
           <MenubarItem>
             New Tab <MenubarShortcut>⌘T</MenubarShortcut>
           </MenubarItem>
-          <MenubarItem>New Window</MenubarItem>
+          <MenubarItem>Features</MenubarItem>
           <MenubarSeparator />
-          <MenubarItem>Share</MenubarItem>
+          <MenubarItem>Pricing</MenubarItem>
           <MenubarSeparator />
-          <MenubarItem>Print</MenubarItem>
+          <MenubarItem>Analytics</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
     </ShadcnMenubar>
