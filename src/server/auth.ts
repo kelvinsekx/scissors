@@ -5,6 +5,8 @@ import {
   type DefaultSession,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import { SupabaseAdapter } from "@auth/supabase-adapter";
+
 import { env } from "~/env.mjs";
 
 /**
