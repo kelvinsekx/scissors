@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "./container";
 import Image from "next/image";
-
+import { HeroCard } from "./hero-card";
 export function HeroSection() {
   return (
     <div className="relative" id="home">
@@ -33,10 +33,10 @@ export function HeroSection() {
               className="inset-50"
             />
             <p className="mt-8 text-gray-700 dark:text-gray-300">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio
-              incidunt nam itaque sed eius modi error totam sit illum. Voluptas
-              doloribus asperiores quaerat aperiam. Quidem harum omnis beatae
-              ipsum soluta!
+              Personalize your shortened URLs to align with your brand identity.
+              Utilize custom slugs, branded links, and domain customization
+              options to reinforce your brand presence and enhance user
+              engagement.
             </p>
             <div className="mt-16 flex flex-wrap justify-center gap-x-6 gap-y-4">
               <a
@@ -44,7 +44,7 @@ export function HeroSection() {
                 className="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
               >
                 <span className="relative text-base font-semibold text-white">
-                  Get started
+                  Sign Up
                 </span>
               </a>
               <a
@@ -56,28 +56,28 @@ export function HeroSection() {
                 </span>
               </a>
             </div>
-            <div className="mt-16 hidden justify-between border-y border-gray-100 py-8 dark:border-gray-800 sm:flex">
-              <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
-                  The lowest price
-                </h6>
-                <p className="mt-2 text-gray-500">Some text here</p>
-              </div>
-              <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
-                  The fastest on the market
-                </h6>
-                <p className="mt-2 text-gray-500">Some text here</p>
-              </div>
-              <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
-                  The most loved
-                </h6>
-                <p className="mt-2 text-gray-500">Some text here</p>
+            <div className=" mt-16 hidden justify-between border-y border-gray-100 px-36 py-8 dark:border-gray-800 sm:flex">
+              <Image
+                src="/egg_shaped_thingy.svg"
+                alt="Egg shaped thingy"
+                width={240}
+                className=""
+                height={250}
+              />
+              <div className="absolute left-4/10">
+                <HeroCard />
               </div>
             </div>
+            {/* <div> */}
+            <img
+              alt="hero base"
+              src={"/hero_base.svg"}
+              width={"100%"}
+              height={93}
+            />
+            {/* </div> */}
           </div>
-          <div className="mt-12 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6">
+          {/* <div className="mt-12 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6">
             <div className="p-4 grayscale transition duration-200 hover:grayscale-0">
               <img
                 src="./images/clients/microsoft.svg"
@@ -138,7 +138,7 @@ export function HeroSection() {
                 height=""
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
     </div>

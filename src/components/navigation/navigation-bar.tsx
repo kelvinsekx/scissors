@@ -1,49 +1,9 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-
-import { cn } from "~/shadcn/utils";
 import { Container } from "../container";
+import Image from "next/image";
 // import { Icons } from "~/shadcn/components/icons";
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
 
 export function NavigationBar() {
   return (
@@ -65,12 +25,9 @@ export function NavigationBar() {
                 className="flex items-center space-x-2"
               >
                 <div aria-hidden="true" className="flex space-x-1">
-                  <div className="h-4 w-4 rounded-full bg-gray-900 dark:bg-white"></div>
-                  <div className="h-6 w-2 bg-primary"></div>
+                  <Image src="/Logo.png" alt="logo" width={155} height={40} />
                 </div>
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Astrolus
-                </span>
+                {/* <span className="text-2xl font-bold text-gray-900 dark:text-white"></span> */}
               </a>
 
               <div className="relative flex max-h-10 items-center lg:hidden">
@@ -108,6 +65,14 @@ export function NavigationBar() {
                 <ul className="flex flex-col gap-6 font-medium tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                   <li>
                     <a
+                      href="#urls"
+                      className="block transition hover:text-primary md:px-4"
+                    >
+                      <span>My URLs</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
                       href="#features"
                       className="block transition hover:text-primary md:px-4"
                     >
@@ -116,26 +81,18 @@ export function NavigationBar() {
                   </li>
                   <li>
                     <a
-                      href="#solution"
+                      href="#pricing"
                       className="block transition hover:text-primary md:px-4"
                     >
-                      <span>Solution</span>
+                      <span>Pricing</span>
                     </a>
                   </li>
                   <li>
                     <a
-                      href="#testimonials"
+                      href="#analytics"
                       className="block transition hover:text-primary md:px-4"
                     >
-                      <span>Testimonials</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#blog"
-                      className="block transition hover:text-primary md:px-4"
-                    >
-                      <span>Blog</span>
+                      <span>Analytics</span>
                     </a>
                   </li>
                 </ul>
@@ -144,10 +101,18 @@ export function NavigationBar() {
               <div className="mt-12 lg:mt-0">
                 <a
                   href="#"
+                  className="block transition hover:text-primary md:px-4"
+                >
+                  <span>Login</span>
+                </a>
+              </div>
+              <div className="mt-12 lg:mt-0">
+                <a
+                  href="#"
                   className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
                 >
                   <span className="relative text-sm font-semibold text-white">
-                    Get Started
+                    Try for free
                   </span>
                 </a>
               </div>
