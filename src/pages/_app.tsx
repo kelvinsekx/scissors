@@ -1,16 +1,25 @@
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import "~/styles/globals.css";
-
-const MyApp: AppType<{ session: Session | null }> = ({
+import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "~/styles/chakraTheme";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
+import { useState } from "react";
+import { Database } from "types/database.types";
+const MyApp: AppType<{ initialSession: Session }> = ({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps,
 }) => {
+  const [supabaseClient] = useState(() => createPagesBrowserClient<Database>());
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </SessionContextProvider>
   );
 };
 
