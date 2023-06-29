@@ -17,6 +17,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@next-auth/supabase-adapter": "^0.2.1",
+        "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-menubar": "^1.0.3",
     "@radix-ui/react-navigation-menu": "^1.1.3",
     "@supabase/auth-helpers-nextjs": "^0.7.2",

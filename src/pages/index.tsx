@@ -1,7 +1,10 @@
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
 import { HeroSection } from "~/components/hero-section";
 import { NavigationBar } from "~/components/navigation/navigation-bar";
+import { Info } from "~/components/info";
+import { SocialProof } from "~/components/social-proof";
+import { Faq } from "~/components/faq";
 
 export default function Home() {
   return (
@@ -14,6 +17,9 @@ export default function Home() {
       <main>
         <NavigationBar />
         <HeroSection />
+        <Info />
+        <SocialProof />
+        <Faq />
       </main>
     </>
   );
