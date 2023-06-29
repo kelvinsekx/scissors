@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^0.1.2",
+    "@supabase/supabase-js": "^2.26.0",
     "@t3-oss/env-nextjs": "^0.3.1",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
