@@ -1,5 +1,4 @@
 import * as React from "react";
-import { SocialDeets } from "./social-deets";
 import { Card, CardContent, CardHeader, CardTitle } from "~/shadcn/ui/card";
 
 export function SocialCard() {
