@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Container } from "../container";
 import Image from "next/image";
+import { LinkShortener } from "../shortener";
 // import { Icons } from "~/shadcn/components/icons";
 
 export function NavigationBar() {
@@ -65,7 +66,7 @@ export function NavigationBar() {
                 <ul className="flex flex-col gap-6 font-medium tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                   <li>
                     <a
-                      href="#urls"
+                      href="#LinkShortener"
                       className="block transition hover:text-primary md:px-4"
                     >
                       <span>My URLs</span>

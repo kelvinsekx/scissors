@@ -5,6 +5,8 @@ import { NavigationBar } from "~/components/navigation/navigation-bar";
 import { Info } from "~/components/info";
 import { SocialProof } from "~/components/social-proof";
 import { Faq } from "~/components/faq";
+import { PricingCard } from "~/components/pricing-card";
+import { LinkShortener } from "~/components/shortener";
 
 export default function Home() {
   return (
@@ -19,6 +21,8 @@ export default function Home() {
         <HeroSection />
         <Info />
         <SocialProof />
+        <PricingCard />
+        <LinkShortener />
         <Faq />
       </main>
     </>

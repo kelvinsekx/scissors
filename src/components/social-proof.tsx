@@ -1,15 +1,16 @@
 import React from "react";
 import { SocialCard } from "./social-card";
 import { SocialDeets } from "./social-deets";
+
 export function SocialProof() {
   return (
-    <div className="flex w-3/4 flex-row">
+    <div className="align-center flex flex-row justify-evenly space-x-16 px-28 pr-0.5">
       <SocialCard />
-      <div className="m-8 flex w-3/4 max-w-screen-md flex-row justify-end">
+      <div className="grid grid-flow-col grid-rows-2 p-4">
         <div className="px-2">
           <SocialDeets
             title="URL Shortening"
-            description="Scissor allows you to shorten URLs of your business, events. Shorten your URL at scale, URL redirects."
+            description={`Scissor allows you to shorten URLs of your business, events. Shorten your URL at scale, URL redirects.`}
           />
         </div>
         <div className="px-2">
