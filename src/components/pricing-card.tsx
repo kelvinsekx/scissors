@@ -2,33 +2,13 @@ import React from "react";
 
 export function PricingCard() {
   return (
-    <div className="inline-flex h-[1073px] w-[1440px] flex-col items-center justify-start gap-[68px] bg-white px-44 pb-28 pt-[42px]">
-      <div className="inline-flex items-start justify-start gap-4 self-stretch">
-        <div className="inline-flex flex-col items-center justify-start gap-2">
-          <div className="text-center">
-            <span className="text-[40px] font-normal leading-10 text-neutral-900">
-              A{" "}
-            </span>
-            <span className="text-[40px] font-normal leading-10 text-blue-700">
-              price perfect
-            </span>
-            <span className="text-[40px] font-normal leading-10 text-neutral-900">
-              {" "}
-              for your needs.
-            </span>
-          </div>
-          <div className="h-[52px] w-[556px] text-center text-[16px] font-normal leading-normal text-neutral-900">
-            From catering for your personal, business, event, socials needs, you
-            can be rest assured we have you in mind in our pricing.
-          </div>
-        </div>
-      </div>
-      <div className="relative h-[627px] w-[1088px]">
-        <div className="absolute left-0 top-[86px] inline-flex h-[455px] w-[379px] flex-col items-start justify-start gap-[34px] rounded-xl border border border border border-blue-700 bg-white pb-[45px] pl-[87px] pr-[98px] pt-6 shadow">
-          <div className="text-center text-[24px] font-normal leading-loose text-neutral-900">
+    <div className="relative h-[1073px] w-[1440px] space-x-0 bg-white">
+      <div className="absolute left-[176px] top-[218px] ">
+        <div className="absolute left-0 top-[86px] h-[455px] w-[379px] rounded-xl border border border border border-blue-700 bg-white shadow">
+          <div className="absolute left-[87px] top-[24px] text-center text-[24px] font-normal leading-loose text-neutral-900">
             Basic
           </div>
-          <div className="inline-flex flex-col items-start justify-start gap-4 self-stretch">
+          <div className="absolute left-[87px] top-[90px] inline-flex flex-col items-start justify-start gap-4">
             <div className="flex flex-col items-start justify-start gap-2">
               <div className="text-center text-[40px] font-normal leading-10 text-neutral-900">
                 Free
@@ -123,11 +103,11 @@ export function PricingCard() {
             </div>
           </div>
         </div>
-        <div className="absolute left-[339px] top-0 inline-flex h-[627px] w-[410px] flex-col items-start justify-start gap-6 rounded-xl bg-gradient-to-b from-slate-800 to-slate-800 pb-[148px] pl-[65px] pr-[106px] pt-[95px] shadow">
-          <div className="text-center text-[24px] font-normal leading-loose text-white">
+        <div className="absolute left-[339px] top-0 h-[627px] w-[410px] rounded-xl bg-gradient-to-b from-slate-800 to-slate-800 shadow">
+          <div className="absolute left-[65px] top-[95px] text-center text-[24px] font-normal leading-loose text-white">
             Professional
           </div>
-          <div className="inline-flex flex-col items-start justify-start gap-6 self-stretch">
+          <div className="absolute left-[65px] top-[151px] inline-flex flex-col items-start justify-start gap-6">
             <div className="flex flex-col items-start justify-start gap-2">
               <div className="text-center">
                 <span className="text-[40px] font-normal leading-10 text-white">
@@ -176,7 +156,7 @@ export function PricingCard() {
           </div>
         </div>
       </div>
-      <div className="inline-flex items-start justify-start gap-3 self-stretch">
+      <div className="absolute left-[514px] top-[913px] inline-flex items-start justify-start gap-3">
         <div className="flex h-12 w-[200px] items-center justify-center gap-2.5 rounded-[100px] border border border border border-blue-600 px-6 py-3">
           <div className="text-[16px] font-normal leading-3 text-blue-600">
             Get Custom Pricing
@@ -185,6 +165,26 @@ export function PricingCard() {
         <div className="flex h-12 w-[200px] items-center justify-center gap-2.5 rounded-[100px] bg-blue-600 px-6 py-3">
           <div className="text-[16px] font-normal leading-3 text-white">
             Select Pricing
+          </div>
+        </div>
+      </div>
+      <div className="absolute left-[432px] top-[42px] inline-flex items-start justify-start gap-4">
+        <div className="inline-flex flex-col items-center justify-start gap-2">
+          <div className="text-center">
+            <span className="text-[40px] font-normal leading-10 text-neutral-900">
+              A{" "}
+            </span>
+            <span className="text-[40px] font-normal leading-10 text-blue-700">
+              price perfect
+            </span>
+            <span className="text-[40px] font-normal leading-10 text-neutral-900">
+              {" "}
+              for your needs.
+            </span>
+          </div>
+          <div className="h-[52px] w-[556px] text-center text-[16px] font-normal leading-normal text-neutral-900">
+            From catering for your personal, business, event, socials needs, you
+            can be rest assured we have you in mind in our pricing.
           </div>
         </div>
       </div>

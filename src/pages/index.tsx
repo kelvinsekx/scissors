@@ -7,6 +7,8 @@ import { SocialProof } from "~/components/social-proof";
 import { Faq } from "~/components/faq";
 import { PricingCard } from "~/components/pricing-card";
 import { LinkShortener } from "~/components/shortener";
+import { Footer } from "~/components/footer";
+import { Final } from "~/components/revolution";
 
 export default function Home() {
   return (
@@ -24,6 +26,8 @@ export default function Home() {
         <PricingCard />
         <LinkShortener />
         <Faq />
+        <Final />
+        <Footer />
       </main>
     </>
   );
