@@ -14,18 +14,15 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
         : z.string().min(1).optional(),
-    NEXTAUTH_URL: z
-      .preprocess(
-        // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-        // Since NextAuth.js automatically uses the VERCEL_URL if present.
-        (str) => process.env.VERCEL_URL ?? str,
-        // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-        process.env.VERCEL ? z.string().min(1) : z.string().url()
-      )
-      .optional(),
-    NEXT_PUBLIC_SUPABASE_URL: "https://fxyweoeybgkegjkptjfk.supabase.co",
-    SUPABASE_SERVICE_ROLE_KEY:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4eXdlb2V5YmdrZWdqa3B0amZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgwMzMxMTksImV4cCI6MjAwMzYwOTExOX0.nfCPGmmi9WM0q7TV8Yl80RfFP0ubqif5lTzD-XtlaHQ",
+    NEXTAUTH_URL: z.preprocess(
+      // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
+      // Since NextAuth.js automatically uses the VERCEL_URL if present.
+      (str) => process.env.VERCEL_URL ?? str,
+      // VERCEL_URL doesn't include `https` so it cant be validated as a URL
+      process.env.VERCEL ? z.string().min(1) : z.string().url()
+    ),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
+    SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
   },
 
   /**
