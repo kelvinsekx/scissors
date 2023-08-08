@@ -4,9 +4,9 @@ import { SocialDeets } from "./social-deets";
 
 export function SocialProof() {
   return (
-    <div className="align-center flex flex-row justify-evenly space-x-16 px-28 pr-0.5">
+    <div className="items-start flex flex-row justify-evenly space-x-16 px-28 pr-0.5 mt-[128px]">
       <SocialCard />
-      <div className="grid grid-flow-col grid-rows-2 p-4">
+      <div className="grid grid-flow-col gap-[28px] grid-rows-2 ">
         <div className="px-2">
           <SocialDeets
             title="URL Shortening"

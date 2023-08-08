@@ -6,9 +6,9 @@ interface Props {
 }
 export function InfoDeets({ title, description }: Props) {
   return (
-    <div className="w-28">
-      <h1 className="text-3xl text-base font-semibold">{title}</h1>
-      <p className="text-sm">{description}</p>
+    <div className="max-w-[143px] flex flex-col gap-[16px] font-[500] "  >
+      <h1 className="text-[32px] text-base font-[500]">{title}</h1>
+      <p className="text-[16px] font-[400]">{description}</p>
     </div>
   );
 }
