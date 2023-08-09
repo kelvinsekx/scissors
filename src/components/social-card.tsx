@@ -5,7 +5,7 @@ export function SocialCard() {
   return (
       <div>
           <div className="flex justify-between gap-[1em] ">
-             <img className="self-start" src="/line 70.svg" alt="svg" />
+             <img className="self-start"  src="/line 70.svg" alt="svg" />
              <div className="flex flex-col gap-[24px]">
                 <div className="flex">
                   <h2 className="text-3xl text-base font-bold text-gray-900 dark:text-white md:text-2xl xl:text-3xl">
