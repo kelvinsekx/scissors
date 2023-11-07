@@ -6,6 +6,10 @@ import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import { Database } from "types/database.types";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 const MyApp: AppType<{ initialSession: Session }> = ({
   Component,
   pageProps,

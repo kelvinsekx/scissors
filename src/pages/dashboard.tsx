@@ -1,5 +1,5 @@
 import React from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { Layout } from "../components/Layout";
 import {
   Box,
@@ -18,15 +18,57 @@ import { LineChart } from "~/components/stats/LineChart";
 import { faker } from "@faker-js/faker";
 import { ChartData, ChartOptions } from "chart.js";
 import { colors } from "~/styles/chakraTheme";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "types/database.types";
+import dayjs from "dayjs";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const supabase = createPagesServerClient<Database>(ctx);
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  const past24Hours = dayjs().subtract(1, 'day');
+
+  const [
+    {count: totalLookup, error: totalCountError},
+    {count: newUsers, error: newUserCountError},
+  ] = await Promise.all([
+    supabase.from('url_visits').select('*', {count: 'exact', head: true}).gt('created_at', past24Hours.toDate()),
+    supabase.from('distinct_user').select('*', {count: 'exact', head: true, }).gt('created_at', past24Hours.toDate())
+  ])
+
+  console.log('====================================');
+  console.log("totalLookup", totalLookup);
+  console.log('====================================');
+
+  if (totalCountError || newUserCountError) {
+    // Some error occurred
+  }
+  const returningUsers = (totalLookup || 0) - (newUsers || 0);
   return {
-    props: { feed: [] },
+    props: { stats: {
+      totalLookup: totalLookup || 0,
+      newUsers: newUsers || 0,
+      returningUsers: returningUsers || 0,
+    } },
   };
 };
 
 type Props = {
-  feed: [];
+  stats: {
+    totalLookup: number,
+    newUsers: number,
+    returningUsers: number
+  };
 };
 
 export const options: ChartOptions<"line"> = {
@@ -73,26 +115,26 @@ export const data: ChartData<"line"> = {
   ],
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Dashboard: React.FC<Props> = (props) => {
   return (
     <Layout>
       <Box className="page" pt={5}>
         <Stack direction={{ base: "column", md: "row" }} mt={5} spacing={5}>
           <QuickStatsCard
             title={"Last 24 hours"}
-            stat={"5000"}
+            stat={props.stats.newUsers.toFixed()}
             icon={<LiaRouteSolid size={"3em"} />}
             description="New user lookups"
           />
           <QuickStatsCard
             title={"Last 24 hours"}
-            stat={"5000"}
+            stat={props.stats.returningUsers.toFixed()}
             icon={<RxLink2 size={"3em"} />}
             description="returning users"
           />
           <QuickStatsCard
             title={"Last 24 hours"}
-            stat={"5000"}
+            stat={props.stats.totalLookup.toFixed()}
             icon={<FiUsers size={"3em"} />}
             description="Total lookups"
           />
@@ -112,4 +154,4 @@ const Blog: React.FC<Props> = (props) => {
   );
 };
 
-export default Blog;
+export default Dashboard;

@@ -25,7 +25,8 @@ import {
 import { useForm } from "react-hook-form";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //icons
 import { BiLockAlt } from "react-icons/bi";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
@@ -49,19 +50,27 @@ export default function SimpleCard() {
     handleSubmit,
     register,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async ({ email, password }: any) => {
-    await supabaseClient.auth.signInWithPassword({
+    const res = await supabaseClient.auth.signInWithPassword({
       email,
       password,
     });
+    if (res.error) {
+      toast(res.error.message, {type: 'error'})
+    }
+    if (res.data.user) {
+      reset();
+      router.push('/dashboard')
+    }
     router.reload();
   };
 
   if (user) {
-    router.push("/home");
+    router.push("/dashboard");
   }
 
   return (
@@ -92,46 +101,40 @@ export default function SimpleCard() {
         {/* <Collapse in={isOpenCollapse}> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={4}>
-            <FormControl
-              id="email"
-              isInvalid={Boolean(router.query.error)}
-              isRequired
-            >
-              <Input
-                placeholder="Email address or username"
-                type="email"
-                {...register("username")}
-              />
-            </FormControl>
-            <FormControl
-              id="password"
-              isRequired
-              isInvalid={Boolean(router.query.error)}
-            >
-              <InputGroup>
-                <Input
-                  placeholder="Password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    _hover={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
+            <FormControl id="email" isInvalid={!!errors.email}>
+                <Input id="email" type="email" placeholder="Email" {
+                  ...register('email', {
+                    required: 'This is required',
+                    minLength: { value: 4, message: 'Minimum length should be 4' },
+                    
+                  })
+                } />
+              </FormControl>
+              <FormControl id="password" isInvalid={!!errors.password} isRequired>
+                <InputGroup>
+                  <Input
+                    id="password"
+                    placeholder="Password"
+                    type={showPassword ? "text" : "password"}
+                    {
+                      ...register('password', {
+                        required: 'This is required',
+                        minLength: { value: 4, message: 'Minimum length should be 4' },
+                      })
                     }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              {router.query.error &&
-                router.query.error === "CredentialsSignin" && (
-                  <FormErrorMessage>Invalid credentials</FormErrorMessage>
-                )}
-            </FormControl>
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
             <Stack spacing={5}>
               <Stack direction={"row-reverse"} justify={"space-between"}>
                 {/* <Checkbox>Remember me</Checkbox> */}
@@ -164,6 +167,7 @@ export default function SimpleCard() {
         </Stack>
         {/* </Collapse> */}
       </Stack>
+      <ToastContainer />
     </Flex>
   );
 }

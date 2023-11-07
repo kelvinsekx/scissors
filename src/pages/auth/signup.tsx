@@ -17,11 +17,13 @@ import {
   Divider,
   FormHelperText,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,19 +34,36 @@ export default function SignupCard() {
     handleSubmit,
     register,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  useEffect(() => {
+    if (user) {
+      router.replace('/dashboard');
+    }
+  }, [user])
+
   const onSubmit = async ({ email, password, username }: any) => {
-    await supabaseClient.auth.signUp({
+    console.log('====================================');
+    console.log('data', { email, password, username });
+    console.log('====================================');
+    const res = await supabaseClient.auth.signUp({
       email: email,
       password: password,
       options: { data: { username } },
     });
+    if (res.error) {
+      toast(res.error.message, {type: 'error'})
+    }
+    if (res.data.user) {
+      reset();
+      toast('User created! Check your email for verification before log in. ', {type: 'success'})
+    }
   };
 
   if (user) {
-    router.push("/home");
+    router.push("/dashboard");
   }
   return (
     <Flex
@@ -79,17 +98,36 @@ export default function SignupCard() {
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
-              <FormControl id="userName" isRequired>
-                <Input type="text" placeholder="Username" />
+              <FormControl id="username" isRequired isInvalid={!!errors.password}>
+                <Input id="username" type="text" placeholder="Username" {
+                  ...register('username', {
+                    required: 'This is required',
+                    minLength: { value: 4, message: 'Minimum length should be 4' },
+                    
+                  })
+                } />
               </FormControl>
-              <FormControl id="email" isRequired>
-                <Input type="email" placeholder="Email" />
+              <FormControl id="email" isInvalid={!!errors.email}>
+                <Input id="email" type="email" placeholder="Email" {
+                  ...register('email', {
+                    required: 'This is required',
+                    minLength: { value: 4, message: 'Minimum length should be 4' },
+                    
+                  })
+                } />
               </FormControl>
-              <FormControl id="password" isRequired>
+              <FormControl id="password" isInvalid={!!errors.password} isRequired>
                 <InputGroup>
                   <Input
+                    id="password"
                     placeholder="Password"
                     type={showPassword ? "text" : "password"}
+                    {
+                      ...register('password', {
+                        required: 'This is required',
+                        minLength: { value: 4, message: 'Minimum length should be 4' },
+                      })
+                    }
                   />
                   <InputRightElement h={"full"}>
                     <Button
@@ -109,6 +147,8 @@ export default function SignupCard() {
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
+                  type="submit"
+                  isLoading={isSubmitting}
                   loadingText="Submitting"
                   size="lg"
                   bg={"blue.400"}
@@ -132,6 +172,7 @@ export default function SignupCard() {
           </form>
         </Box>
       </Stack>
+      <ToastContainer />
     </Flex>
   );
 }

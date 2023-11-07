@@ -22,9 +22,6 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { Database } from "types/database.types";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // Create authenticated Supabase Client
@@ -34,12 +31,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+    
+
   let urls: URLProps[] = [];
   const { data, error } = await supabase
     .from("urls")
     .select(`*, url_visits(created_at)`)
     .eq("user_id", session?.user.id)
-    .order("created_at", { foreignTable: "url_visitors", ascending: false });
+    .order("created_at");
 
   if (data) {
     //format
@@ -57,14 +64,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     console.log("PG error", error);
     console.log("====================================");
   }
-
-  if (!session)
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
 
   return {
     props: {

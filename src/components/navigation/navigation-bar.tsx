@@ -4,6 +4,8 @@ import * as React from "react";
 import { Container } from "../container";
 import Image from "next/image";
 import { LinkShortener } from "../shortener";
+import Link from "next/link";
+
 // import { Icons } from "~/shadcn/components/icons";
 
 export function NavigationBar() {
@@ -100,22 +102,23 @@ export function NavigationBar() {
               </div>
 
               <div className="mt-12 lg:mt-0">
-                <a
-                  href="#"
-                  className="block transition hover:text-primary md:px-4"
-                >
-                  <span>Login</span>
-                </a>
+                <Link href="/auth/signin"
+                  className="block transition hover:text-primary md:px-4">
+                    <span>Login</span>
+                </Link>
               </div>
               <div className="mt-12 lg:mt-0">
-                <a
-                  href="#"
-                  className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-                >
+                <Link href="/auth/signup" className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
                   <span className="relative text-sm font-semibold text-white">
                     Try for free
                   </span>
-                </a>
+                </Link>
+                {/* <a
+                  href="#"
+                  className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
+                >
+                  
+                </a> */}
               </div>
             </div>
           </div>

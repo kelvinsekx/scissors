@@ -7,7 +7,7 @@ export interface LinkItemProps {
   link: string;
 }
 export const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome, link: "/" },
-  { name: "My URLs", icon: FiLink, link: "/urls" },
-  { name: "My Visitors", icon: FiStar, link: "/visitors" },
+  { name: "Home", icon: FiHome, link: "/dashboard" },
+  // { name: "My URLs", icon: FiLink, link: "/urls" },
+  // { name: "My Visitors", icon: FiStar, link: "/visitors" },
 ];

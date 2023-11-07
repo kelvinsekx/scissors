@@ -32,12 +32,222 @@ export interface Database {
       [_ in never]: never
     }
   }
-  public: {
+  next_auth: {
     Tables: {
-      [_ in never]: never
+      accounts: {
+        Row: {
+          access_token: string | null
+          expires_at: number | null
+          id: string
+          id_token: string | null
+          oauth_token: string | null
+          oauth_token_secret: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token: string | null
+          scope: string | null
+          session_state: string | null
+          token_type: string | null
+          type: string
+          userId: string | null
+        }
+        Insert: {
+          access_token?: string | null
+          expires_at?: number | null
+          id?: string
+          id_token?: string | null
+          oauth_token?: string | null
+          oauth_token_secret?: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type: string
+          userId?: string | null
+        }
+        Update: {
+          access_token?: string | null
+          expires_at?: number | null
+          id?: string
+          id_token?: string | null
+          oauth_token?: string | null
+          oauth_token_secret?: string | null
+          provider?: string
+          providerAccountId?: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type?: string
+          userId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      sessions: {
+        Row: {
+          expires: string
+          id: string
+          sessionToken: string
+          userId: string | null
+        }
+        Insert: {
+          expires: string
+          id?: string
+          sessionToken: string
+          userId?: string | null
+        }
+        Update: {
+          expires?: string
+          id?: string
+          sessionToken?: string
+          userId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessions_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          email: string | null
+          emailVerified: string | null
+          id: string
+          image: string | null
+          name: string | null
+        }
+        Insert: {
+          email?: string | null
+          emailVerified?: string | null
+          id?: string
+          image?: string | null
+          name?: string | null
+        }
+        Update: {
+          email?: string | null
+          emailVerified?: string | null
+          id?: string
+          image?: string | null
+          name?: string | null
+        }
+        Relationships: []
+      }
+      verification_tokens: {
+        Row: {
+          expires: string
+          identifier: string | null
+          token: string
+        }
+        Insert: {
+          expires: string
+          identifier?: string | null
+          token: string
+        }
+        Update: {
+          expires?: string
+          identifier?: string | null
+          token?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
+    }
+    Functions: {
+      uid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      url_visits: {
+        Row: {
+          created_at: string | null
+          id: number
+          ip_address: string | null
+          url_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          ip_address?: string | null
+          url_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          ip_address?: string | null
+          url_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "url_visits_url_id_fkey"
+            columns: ["url_id"]
+            referencedRelation: "urls"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      urls: {
+        Row: {
+          created_at: string | null
+          id: string
+          original_url: string | null
+          short_url_code: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          original_url?: string | null
+          short_url_code?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          original_url?: string | null
+          short_url_code?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "urls_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
+    Views: {
+      distinct_user: {
+        Row: {
+          ip_address: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
@@ -158,6 +368,12 @@ export interface Database {
             columns: ["bucket_id"]
             referencedRelation: "buckets"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "objects_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -229,4 +445,3 @@ export interface Database {
     }
   }
 }
-
