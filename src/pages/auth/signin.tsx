@@ -59,6 +59,7 @@ export default function SimpleCard() {
       email,
       password,
     });
+    console.log(res)
     if (res.error) {
       toast(res.error.message, {type: 'error'})
     }
@@ -66,7 +67,7 @@ export default function SimpleCard() {
       reset();
       router.push('/dashboard')
     }
-    router.reload();
+   
   };
 
   if (user) {

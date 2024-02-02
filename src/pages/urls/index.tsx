@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { GetServerSideProps, NextPage } from "next";
+
 import {
   Button,
   HStack,
@@ -7,14 +10,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { BiPlus } from "react-icons/bi";
-import { Layout } from "~/components/Layout";
+
 import { Heading } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
-
 import { Text } from "@chakra-ui/react";
+
+import { useForm } from "react-hook-form";
+
 import URLCard, { URLProps } from "~/components/urls/url-card";
-import { useState, useEffect } from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { Layout } from "~/components/Layout";
+
 import {
   Session,
   User,
@@ -39,7 +44,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
-    
 
   let urls: URLProps[] = [];
   const { data, error } = await supabase
@@ -90,6 +94,14 @@ const Urls: NextPage<PageProps> = ({ urls }) => {
     });
   };
 
+  const {
+    handleSubmit,
+    register,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 1400) {
@@ -103,6 +115,11 @@ const Urls: NextPage<PageProps> = ({ urls }) => {
 
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
+
+  const onSubmit = (v: { longUrl: string; alias: string }) => {
+    console.log({ v });
+    
+  };
   return (
     <Layout>
       {isVisible && (
@@ -126,51 +143,61 @@ const Urls: NextPage<PageProps> = ({ urls }) => {
           Enter a new URL to shorten it
         </Text>
       </Stack>
-      <HStack
-        // flex={1}
-        alignItems={"center"}
-        justifyContent={"center"}
-        flexDir={"row"}
-        w={{ base: "70%", md: "50%" }}
-        mx="auto"
-      >
-        <Input
-          type={"text"}
-          placeholder={"URL to shorten"}
-          color={useColorModeValue("gray.800", "gray.200")}
-          bg={useColorModeValue("white", "gray.600")}
-          rounded={"full"}
-          border={0}
-          // maxW={"400px"}
-          _focus={{
-            bg: useColorModeValue("gray.200", "gray.800"),
-            outline: "none",
-          }}
-        />
-        <Input
-          type={"text"}
-          placeholder={"Custom short code"}
-          color={useColorModeValue("gray.800", "gray.200")}
-          bg={useColorModeValue("white", "gray.600")}
-          rounded={"full"}
-          border={0}
-          maxW={"180px"}
-          _focus={{
-            bg: useColorModeValue("gray.200", "gray.800"),
-            outline: "none",
-          }}
-        />
-        <Button
-          bg={"blue.400"}
-          rounded={"full"}
-          color={"white"}
-          flex={"1 0 auto"}
-          _hover={{ bg: "blue.500" }}
-          _focus={{ bg: "blue.500" }}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <HStack
+          // flex={1}
+          alignItems={"center"}
+          justifyContent={"center"}
+          flexDir={"row"}
+          w={{ base: "70%", md: "50%" }}
+          mx="auto"
         >
-          Go!
-        </Button>
-      </HStack>
+          <Input
+            type={"text"}
+            placeholder={"URL to shorten"}
+            color={useColorModeValue("gray.800", "gray.200")}
+            bg={useColorModeValue("white", "gray.600")}
+            rounded={"full"}
+            border={0}
+            // maxW={"400px"}
+            _focus={{
+              bg: useColorModeValue("gray.200", "gray.800"),
+              outline: "none",
+            }}
+            {...register("longUrl", {
+              pattern: /(www|http:|https:)+[^\s]+[\w]/,
+            })}
+          />
+          <Input
+            type={"text"}
+            placeholder={"Custom short code"}
+            color={useColorModeValue("gray.800", "gray.200")}
+            bg={useColorModeValue("white", "gray.600")}
+            rounded={"full"}
+            border={0}
+            maxW={"180px"}
+            _focus={{
+              bg: useColorModeValue("gray.200", "gray.800"),
+              outline: "none",
+            }}
+            {...register("alias", {
+              required: "This is required",
+              minLength: { value: 2, message: "Minimum length should be 4" },
+            })}
+          />
+          <Button
+            bg={"blue.400"}
+            rounded={"full"}
+            color={"white"}
+            type="submit"
+            flex={"1 0 auto"}
+            _hover={{ bg: "blue.500" }}
+            _focus={{ bg: "blue.500" }}
+          >
+            Go!
+          </Button>
+        </HStack>
+      </form>
       <Stack spacing={2} mt={4} mb={4}>
         <Text fontSize="sm" textAlign={"center"}>
           Here are your shortened URLs

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { HeroSection } from "~/components/hero-section";
 import { NavigationBar } from "~/components/navigation/navigation-bar";
 import { Info } from "~/components/info";

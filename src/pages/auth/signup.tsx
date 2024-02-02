@@ -1,70 +1,74 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
   Input,
+  Text,
+  FormControl,
   InputGroup,
   HStack,
   InputRightElement,
   Stack,
   Button,
-  Heading,
-  Text,
   useColorModeValue,
   Link,
   AbsoluteCenter,
   Divider,
   FormHelperText,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useForm } from "react-hook-form";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+type InputType = {
+  email: string;
+  password: string;
+  username: string;
+};
+/**
+ *
+ *
+ */
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
-  const user = useUser();
+
+  /**
+   * react-hook-form
+   */
   const {
     handleSubmit,
     register,
-    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  useEffect(() => {
-    if (user) {
-      router.replace('/dashboard');
-    }
-  }, [user])
-
-  const onSubmit = async ({ email, password, username }: any) => {
-    console.log('====================================');
-    console.log('data', { email, password, username });
-    console.log('====================================');
+  const onSubmit = async ({ email, password, username }: InputType) => {
+    
     const res = await supabaseClient.auth.signUp({
       email: email,
       password: password,
       options: { data: { username } },
     });
     if (res.error) {
-      toast(res.error.message, {type: 'error'})
+      toast(res.error.message, { type: "error" });
     }
     if (res.data.user) {
       reset();
-      toast('User created! Check your email for verification before log in. ', {type: 'success'})
+      toast("User created! Check your email for verification before log in. ", {
+        type: "success",
+      });
+      router.push("/auth/signin");
     }
   };
 
-  if (user) {
-    router.push("/dashboard");
-  }
   return (
     <Flex
       minH={"100vh"}
@@ -98,36 +102,55 @@ export default function SignupCard() {
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
-              <FormControl id="username" isRequired isInvalid={!!errors.password}>
-                <Input id="username" type="text" placeholder="Username" {
-                  ...register('username', {
-                    required: 'This is required',
-                    minLength: { value: 4, message: 'Minimum length should be 4' },
-                    
-                  })
-                } />
+              <FormControl
+                id="username"
+                isRequired
+                isInvalid={!!errors.password}
+              >
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  {...register("username", {
+                    required: "This is required",
+                    minLength: {
+                      value: 4,
+                      message: "Minimum length should be 4",
+                    },
+                  })}
+                />
               </FormControl>
               <FormControl id="email" isInvalid={!!errors.email}>
-                <Input id="email" type="email" placeholder="Email" {
-                  ...register('email', {
-                    required: 'This is required',
-                    minLength: { value: 4, message: 'Minimum length should be 4' },
-                    
-                  })
-                } />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  {...register("email", {
+                    required: "This is required",
+                    minLength: {
+                      value: 4,
+                      message: "Minimum length should be 4",
+                    },
+                  })}
+                />
               </FormControl>
-              <FormControl id="password" isInvalid={!!errors.password} isRequired>
+              <FormControl
+                id="password"
+                isInvalid={!!errors.password}
+                isRequired
+              >
                 <InputGroup>
                   <Input
                     id="password"
                     placeholder="Password"
                     type={showPassword ? "text" : "password"}
-                    {
-                      ...register('password', {
-                        required: 'This is required',
-                        minLength: { value: 4, message: 'Minimum length should be 4' },
-                      })
-                    }
+                    {...register("password", {
+                      required: "This is required",
+                      minLength: {
+                        value: 4,
+                        message: "Minimum length should be 4",
+                      },
+                    })}
                   />
                   <InputRightElement h={"full"}>
                     <Button
